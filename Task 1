@@ -1,0 +1,47 @@
+def get_hint(secret, guess):
+    hint = []
+    for s, g in zip(secret, guess):
+        if s == g:
+            hint.append(g)
+        else:
+            hint.append('_')
+    return ''.join(hint)
+
+def play_game(player_number):
+    secret = input(f"Player {player_number}, set your secret number: ")
+    attempts = 0
+    guessed = False
+    
+    print("\n" * 50)  # Clear the screen to hide the secret number
+    print(f"Player {3 - player_number}, start guessing!")
+    
+    while not guessed:
+        guess = input("Enter your guess: ")
+        attempts += 1
+        if guess == secret:
+            guessed = True
+        else:
+            hint = get_hint(secret, guess)
+            print(f"Hint: {hint}")
+    
+    print(f"Correct! It took {attempts} attempts.")
+    return attempts
+
+def main():
+    print("Welcome to the Mastermind game!")
+    print("Player 1 will set a secret number, and Player 2 will try to guess it.")
+    print("Then Player 2 will set a secret number, and Player 1 will try to guess it.")
+    print("The player who guesses the number with fewer attempts wins.\n")
+    
+    p1_attempts = play_game(1)
+    p2_attempts = play_game(2)
+    
+    if p1_attempts < p2_attempts:
+        print("\nPlayer 2 wins and is crowned Mastermind!")
+    elif p1_attempts > p2_attempts:
+        print("\nPlayer 1 wins and is crowned Mastermind!")
+    else:
+        print("\nIt's a tie!")
+
+if __name__ == "__main__":
+    main()
